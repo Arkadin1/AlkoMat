@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using DrinkApp.ViewModels;
+using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,18 +12,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DrinkApp
+namespace DrinkApp.Views
 {
     /// <summary>
-    /// Logika interakcji dla klasy AddEditDrinkView.xaml
+    /// Logika interakcji dla klasy MainWindow.xaml
     /// </summary>
-    public partial class AddEditDrinkView : MetroWindow
+    public partial class MainWindow : MetroWindow
     {
-        public AddEditDrinkView()
+        public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = new MainViewModel();
         }
     }
 }
