@@ -1,5 +1,7 @@
 ﻿using DrinkApp.Commands;
 using DrinkApp.Models;
+using DrinkApp.Models.Domains;
+using DrinkApp.Models.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,14 +15,16 @@ namespace DrinkApp.ViewModels
 {
     public class AddEditDrinkViewModel : ViewModelBase
     {
-        public AddEditDrinkViewModel(Drink drink = null)
+        private Repository _repository = new Repository();
+
+        public AddEditDrinkViewModel(DrinkWrapper drink = null)
         {
             CloseCommand = new RelayCommand(Close);
             ConfirmCommand = new RelayCommand(Confirm);
 
             if (drink == null)
             {
-                Drink = new Drink();
+                Drink = new DrinkWrapper();
             }
             else
             {
@@ -34,9 +38,9 @@ namespace DrinkApp.ViewModels
         public ICommand CloseCommand { get; set; }
         public ICommand ConfirmCommand { get; set; }
 
-        private Drink _drink;
+        private DrinkWrapper _drink;
 
-        public Drink Drink
+        public DrinkWrapper Drink
         {
             get { return _drink; }
             set { 
@@ -44,6 +48,8 @@ namespace DrinkApp.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        
 
         private bool _isUpdate;
 
@@ -69,42 +75,45 @@ namespace DrinkApp.ViewModels
             }
         }
 
-        private void InitGroups()
+        private int _selectedGroupId;
+
+        public int SelectedGroupId
         {
-            Groups = new ObservableCollection<Group>
+            get { return _selectedGroupId; }
+            set
             {
-                new Group {Id =0, Name = "-- BRAK --"},
-                new Group {Id =1, Name = "Mężczyzna"},
-                new Group {Id =2, Name = "Kobieta"},
-            };
-
-            Drink.Group.Id= 0;
+                _selectedGroupId = value;
+                OnPropertyChanged();
+            }
         }
-
-
 
         private void Confirm(object obj)
         {
+            if (!Drink.IsValid)
+                return;
+
+            
+
             if (!IsUpdate)
-            {
                 AddDrink();
-            }
             else
-            {
                 UpdateDrink();
-            }
-            //później
+
+           
+            
             CloseWindow(obj as Window);
         }
 
+    
+
         private void UpdateDrink()
         {
-            //baza danych
+            _repository.UpdateDrink(Drink);
         }
 
         private void AddDrink()
         {
-            //baza danych
+            _repository.AddDrink(Drink);
         }
 
         private void Close(object obj)
@@ -116,5 +125,20 @@ namespace DrinkApp.ViewModels
         {
             window.Close();
         }
+
+
+        private void InitGroups()
+        {
+            var groups = _repository.GetGroups();
+            groups.Insert(0, new Group { Id = 0, Name = "-- BRAK --" });
+
+            Groups = new ObservableCollection<Group>(groups);
+
+            SelectedGroupId = Drink.Group.Id;
+        }
+
+       
+     
+
     }
 }

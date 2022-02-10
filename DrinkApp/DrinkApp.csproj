@@ -38,6 +38,12 @@
     <Reference Include="ControlzEx, Version=4.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.4.4.0\lib\net462\ControlzEx.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=2.0.0.0, Culture=neutral, PublicKeyToken=51482d6f650b2b3f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.2.4.9\lib\net47\MahApps.Metro.dll</HintPath>
     </Reference>
@@ -48,6 +54,8 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
@@ -76,10 +84,41 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="ApplicationDbContext.cs" />
     <Compile Include="Commands\AsyncRelayCommand.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
-    <Compile Include="Models\Drink.cs" />
-    <Compile Include="Models\Group.cs" />
+    <Compile Include="Migrations\202202082217364_InitialCreate.cs" />
+    <Compile Include="Migrations\202202082217364_InitialCreate.Designer.cs">
+      <DependentUpon>202202082217364_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202202082231161_SetNameMaxLengthAndRequiredInDrinkTable.cs" />
+    <Compile Include="Migrations\202202082231161_SetNameMaxLengthAndRequiredInDrinkTable.Designer.cs">
+      <DependentUpon>202202082231161_SetNameMaxLengthAndRequiredInDrinkTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202202090957518_test.cs" />
+    <Compile Include="Migrations\202202090957518_test.Designer.cs">
+      <DependentUpon>202202090957518_test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202202091114493_test1.cs" />
+    <Compile Include="Migrations\202202091114493_test1.Designer.cs">
+      <DependentUpon>202202091114493_test1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202202101544252_test2.cs" />
+    <Compile Include="Migrations\202202101544252_test2.Designer.cs">
+      <DependentUpon>202202101544252_test2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Alcohol.cs" />
+    <Compile Include="Models\Configurations\DrinkConfiguration.cs" />
+    <Compile Include="Models\Configurations\GroupConfiguration.cs" />
+    <Compile Include="Models\Configurations\TypeDrinkConfiguration.cs" />
+    <Compile Include="Models\Converters\DrinkConverter.cs" />
+    <Compile Include="Models\Domains\Drink.cs" />
+    <Compile Include="Models\Domains\Group.cs" />
+    <Compile Include="Models\Domains\TypeDrink.cs" />
+    <Compile Include="Models\Wrappers\DrinkWrapper.cs" />
+    <Compile Include="Models\Wrappers\GroupWrapper.cs" />
+    <Compile Include="Repository.cs" />
     <Compile Include="ViewModels\AddEditDrinkViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
@@ -109,6 +148,21 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Migrations\202202082217364_InitialCreate.resx">
+      <DependentUpon>202202082217364_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202082231161_SetNameMaxLengthAndRequiredInDrinkTable.resx">
+      <DependentUpon>202202082231161_SetNameMaxLengthAndRequiredInDrinkTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202090957518_test.resx">
+      <DependentUpon>202202090957518_test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202091114493_test1.resx">
+      <DependentUpon>202202091114493_test1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202101544252_test2.resx">
+      <DependentUpon>202202101544252_test2.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -122,6 +176,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DbScripts\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

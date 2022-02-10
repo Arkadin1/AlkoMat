@@ -1,4 +1,5 @@
 ﻿using DrinkApp.Models;
+using DrinkApp.Models.Wrappers;
 using DrinkApp.ViewModels;
 using MahApps.Metro.Controls;
 using System;
@@ -22,11 +23,33 @@ namespace DrinkApp.Views
     /// </summary>
     public partial class AddEditDrinkView : MetroWindow
     {
-        public AddEditDrinkView(Drink drink = null)
+        
+
+        public AddEditDrinkView(DrinkWrapper drink = null)
         {
             InitializeComponent();
 
             DataContext = new AddEditDrinkViewModel(drink);
+        }
+
+       
+
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var BeerString = BeerDrink.Text;
+            var BeerToInt = int.Parse(BeerString);
+
+            var WineString = WineDrink.Text;
+            var WineToInt = int.Parse(WineString);
+
+            var VodkaString = VodkaDrink.Text;
+            var VodkaToint = int.Parse(VodkaString);
+
+            var Score = (BeerToInt + WineToInt + VodkaToint) * 10;
+
+            string ScoreToText = Score.ToString();
+
         }
     }
 }
